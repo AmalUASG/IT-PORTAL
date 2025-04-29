@@ -95,7 +95,7 @@
            </div>
        </xpath>
 
-       <xpath expr="//section[@id='o_wblog_post_main']" position="after">
+       <xpath expr="//section[@id='o_wblog_post_main']" position="inside">
 <table class="table table-sm" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
     <thead>
         <tr>
