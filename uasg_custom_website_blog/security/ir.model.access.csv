@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_it_documents_user,it.documents user,model_it_documents,base.group_user,1,0,0,0
+access_it_document_type_user,it.document.type user,model_it_document_type,base.group_user,1,1,1,1
+
+access_it_documents_limited,it.documents limited,model_it_documents,group_it_documents_limited,1,1,1,1
+

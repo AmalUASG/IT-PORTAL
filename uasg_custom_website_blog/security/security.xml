@@ -1,0 +1,8 @@
+<odoo>
+  <data noupdate="0">
+    <record id="group_it_documents_limited" model="res.groups">
+      <field name="name">IT Documents - Limited Access</field>
+      <field name="category_id" ref="base.module_category_hidden" />
+    </record>
+  </data>
+</odoo>

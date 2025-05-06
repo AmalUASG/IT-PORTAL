@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ===== VIEWS & ACTION: IT DOCUMENTS ===== -->
+
+    <!-- List View -->
+    <record id="view_it_documents_list" model="ir.ui.view">
+        <field name="name">it.documents.list</field>
+        <field name="model">it.documents</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="document_type_id"/>
+                <field name="responsible_user_id"/>
+                <field name="date_created"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_it_documents_form" model="ir.ui.view">
+        <field name="name">it.documents.form</field>
+        <field name="model">it.documents</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="document_type_id"/>
+                        <field name="description"/>
+                        <field name="document_file"/>
+                        <field name="file_name"/>
+                        <field name="responsible_user_id"/>
+                        <field name="date_created"/>
+                        <field name="date_modified"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_it_documents" model="ir.actions.act_window">
+        <field name="name">IT Documents</field>
+        <field name="res_model">it.documents</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ===== VIEWS & ACTION: IT DOCUMENT TYPE ===== -->
+
+    <!-- List View -->
+    <record id="view_it_document_type_list" model="ir.ui.view">
+        <field name="name">it.document.type.list</field>
+        <field name="model">it.document.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_it_document_type_form" model="ir.ui.view">
+        <field name="name">it.document.type.form</field>
+        <field name="model">it.document.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_it_document_type" model="ir.actions.act_window">
+        <field name="name">Document Types</field>
+        <field name="res_model">it.document.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ===== MENUS (Placed at End) ===== -->
+
+    <!-- Main Menu -->
+    <menuitem id="menu_it_documents_root" name="IT Documents" sequence="10"/>
+
+    <!-- Submenus -->
+    <menuitem id="menu_it_documents" name="Documents" parent="menu_it_documents_root" sequence="1"/>
+    <menuitem id="menu_it_document_types" name="Document Types" parent="menu_it_documents_root" sequence="2"/>
+
+    <!-- Menu Actions -->
+    <menuitem id="menu_it_documents_action"
+              name="Manage Documents"
+              parent="menu_it_documents"
+              action="action_it_documents"/>
+
+    <menuitem id="menu_it_document_type_action"
+              name="Manage Types"
+              parent="menu_it_document_types"
+              action="action_it_document_type"/>
+
+</odoo>

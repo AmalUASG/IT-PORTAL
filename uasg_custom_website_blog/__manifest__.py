@@ -11,8 +11,11 @@ The module Add a features to odoo Blog
     'author' : 'Amal Abdelmajid / UASG',
     'depends': ['base','website_blog'],
     'data': [
-    # 'security/ir.model.access.csv',
+    'security/security.xml',
+    'security/ir.model.access.csv',
     'views/views.xml',
+    'views/documentsview.xml',
+    'views/documents_portal.xml'
        
     ],
     'license': 'LGPL-3',

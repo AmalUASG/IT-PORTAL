@@ -1,0 +1,45 @@
+<odoo>
+  <template id="website_it_documents" name="IT Documents">
+    <t t-call="website.layout">
+      <div class="container my-5">
+        <h1 class="mb-4 text-center">📄 IT Documents</h1>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered align-middle">
+            <thead class="table-dark text-center">
+              <tr>
+                <th scope="col">📌 Title</th>
+                <th scope="col">📂 Type</th>
+                <th scope="col">📝 Description</th>
+                <th scope="col">📅 Date Created</th>
+                <th scope="col">⬇️ File</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="documents" t-as="doc">
+                <tr>
+                  <td><strong><t t-esc="doc.name" /></strong></td>
+                  <td><span class="badge bg-primary"><t t-esc="doc.document_type_id.name" /></span></td>
+                  <td><t t-esc="doc.description or '-'" /></td>
+                  <td><t t-esc="doc.date_created.strftime('%Y-%m-%d')" /></td>
+                  <td class="text-center">
+                    <t t-if="doc.document_file">
+                      <a t-att-href="'/web/content/it.documents/' + str(doc.id) + '/document_file?download=true'"
+                         class="btn btn-outline-success btn-sm" >
+                        <i class="fa fa-download"></i> <t t-esc="doc.file_name or 'Download'" />
+                      </a>
+                    </t>
+                    <t t-if="not doc.document_file">
+                      <span class="text-muted">No File</span>
+                    </t>
+                  </td>
+                </tr>
+              </t>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </t>
+  </template>
+</odoo>
+
