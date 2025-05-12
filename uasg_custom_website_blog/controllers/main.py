@@ -45,10 +45,11 @@ class IrHttpCustom(models.AbstractModel):
     _inherit = 'ir.http'
 
     @classmethod
-    def _dispatch(cls, endpoint):
+    def _dispatch(cls, endpoint):  # Include 'args' to match Odoo's signature
         path = request.httprequest.path
 
-        if any(path.startswith(p) for p in EXCLUDED_PATHS):
+        # Exclude asset-related paths to make sure they are not blocked
+        if any(path.startswith(p) for p in EXCLUDED_PATHS) or path.startswith('/web/static/') or path.startswith('/web/assets/'):
             return super()._dispatch(endpoint)
 
         user = request.env.user
@@ -57,7 +58,9 @@ class IrHttpCustom(models.AbstractModel):
             uid = request.session.uid or request.env.ref('base.public_user').id
             user = request.env['res.users'].browse(uid)
 
-        if user._is_public():
+        # Exclude the login redirect for certain paths (like public pages or asset URLs)
+        # You can add additional paths to this check as needed.
+        if user._is_public() and not path.startswith('/web/login'):
             return request.redirect('/web/login?redirect=' + path)
 
-        return super()._dispatch(endpoint)
+        return super()._dispatch(endpoint, args)
