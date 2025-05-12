@@ -49,7 +49,7 @@ class IrHttpCustom(models.AbstractModel):
         path = request.httprequest.path
 
         # Exclude asset-related paths to make sure they are not blocked
-        if any(path.startswith(p) for p in EXCLUDED_PATHS) or path.startswith('/web/static/') or path.startswith('/web/assets/') or  path.startswith('/web/login'):
+        if any(path.startswith(p) for p in EXCLUDED_PATHS) or path.startswith('/web/static/') or path.startswith('/web/assets/') or  path.startswith('/web/login') or  path.startswith('/auth_oauth'):
             return super()._dispatch(endpoint)
 
         user = request.env.user
