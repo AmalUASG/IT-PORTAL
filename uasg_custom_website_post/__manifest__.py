@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'UASG Custom Website Blog',
+    'name': 'UASG Custom Website Post',
     'category': 'Tools',
     'description': """
 The module Coadd a post menu for backend 
