@@ -36,7 +36,7 @@ EXCLUDED_PATHS = [
     '/web/reset_password',
     '/website/static/',
     '/web/static/',
-
+    '/web/image',
     '/favicon.ico',
     '/robots.txt',
 ]
@@ -50,7 +50,7 @@ class IrHttpCustom(models.AbstractModel):
         path = request.httprequest.path
 
         # Exclude asset-related paths to make sure they are not blocked
-        if any(path.startswith(p) for p in EXCLUDED_PATHS) or path.startswith('/web/static/') or path.startswith('/web/assets/') or  path.startswith('/web/login') or  path.startswith('/auth_oauth') or  path.startswith('/web/image'):
+        if any(path.startswith(p) for p in EXCLUDED_PATHS) or path.startswith('/web/static') or path.startswith('/web/assets') or path.startswith('/website')  or  path.startswith('/auth_oauth'):
             return super()._dispatch(endpoint)
 
         user = request.env.user
@@ -62,6 +62,7 @@ class IrHttpCustom(models.AbstractModel):
         # Exclude the login redirect for certain paths (like public pages or asset URLs)
         # You can add additional paths to this check as needed.
         if user._is_public() and not path.startswith('/web/login'):
+            # return request.redirect('/web/login?redirect=' + path)
             return request.redirect('/web/login?redirect=' + path)
 
         return super()._dispatch(endpoint)
