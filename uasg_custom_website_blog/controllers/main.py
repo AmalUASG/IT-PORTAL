@@ -40,6 +40,7 @@ EXCLUDED_PATHS = [
     '/robots.txt',
 ]
 
+
 class IrHttpCustom(models.AbstractModel):
     _inherit = 'ir.http'
 
@@ -50,7 +51,13 @@ class IrHttpCustom(models.AbstractModel):
         if any(path.startswith(p) for p in EXCLUDED_PATHS):
             return super()._dispatch(endpoint)
 
-        if request.env.user._is_public():
+        user = request.env.user
+
+        if not user or not user.ids:
+            uid = request.session.uid or request.env.ref('base.public_user').id
+            user = request.env['res.users'].browse(uid)
+
+        if user._is_public():
             return request.redirect('/web/login?redirect=' + path)
 
         return super()._dispatch(endpoint)
