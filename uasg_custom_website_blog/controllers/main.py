@@ -63,4 +63,4 @@ class IrHttpCustom(models.AbstractModel):
         if user._is_public() and not path.startswith('/web/login'):
             return request.redirect('/web/login?redirect=' + path)
 
-        return super()._dispatch(endpoint, args)
+        return super()._dispatch(endpoint)
