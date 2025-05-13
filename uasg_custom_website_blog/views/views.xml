@@ -1,83 +1,112 @@
 <odoo>
     <!-- Define the Report Template for Blog Post -->
-    <template id="report_blog_post">
-
-       <t t-call="web.html_container">
+<template id="report_blog_post">
+    <t t-call="web.html_container">
         <t t-foreach="docs" t-as="blog_post">
             <t t-call="web.external_layout">
                 <div class="page" style="overflow: visible;">
 
-                    <!-- Inject style overrides for embedded HTML -->
+                    <!-- Style Overrides -->
                     <t t-raw="0">
                         <style>
+                            .blog-pdf-content {
+                                width: 100%;
+                                display: block;
+                                page-break-inside: avoid;
+                            }
+
                             .blog-pdf-content table {
-                            width: 100% !important;
-                            table-layout: fixed !important;
-                            border-collapse: collapse !important;
-                            font-size: 9px !important;
+                                width: 100% !important;
+                                table-layout: fixed !important;
+                                border-collapse: collapse !important;
+                                font-size: 9px !important;
+                                page-break-inside: avoid !important;
                             }
 
                             .blog-pdf-content th,
                             .blog-pdf-content td {
-                            word-break: break-word !important;
-                            white-space: normal !important;
-                            padding: 3px !important;
-                            border: 1px solid #aaa !important;
+                                word-break: break-word !important;
+                                white-space: normal !important;
+                                padding: 3px !important;
+                                border: 1px solid #aaa !important;
+                                page-break-inside: avoid !important;
+                            }
+
+                            table, thead, tbody, tr, td, th {
+                                page-break-inside: avoid !important;
+                                page-break-after: auto !important;
+                                page-break-before: auto !important;
+                            }
+
+                            .page {
+                                overflow: visible !important;
+                            }
+
+                            .no-page-break {
+                                page-break-inside: avoid !important;
+                                break-inside: avoid !important;
+                                display: block;
                             }
                         </style>
                     </t>
 
-
-                    <h1 t-field="blog_post.name"/>
-                    <p t-field="blog_post.subtitle"/>
+                    <!-- Main Content in a no-break container -->
+                    <div class="no-page-break">
+                        <h1 t-field="blog_post.name"/>
+                        <p t-field="blog_post.subtitle"/>
+                    </div>
 
                     <!-- Embedded HTML with tables -->
-                    
-                    <div class="blog-pdf-content" style="width: 100%; overflow-x: hidden;">
+                    <div class="blog-pdf-content no-page-break">
                         <t t-esc="blog_post.content" t-options='{"widget": "html", "safe": True}'/>
                     </div>
-                    <table class="table table-sm" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-                        <thead>
-                            <tr>
-                                <th colspan="2" style="text-align: left; background-color: #f2f2f2; font-weight: bold; padding: 6px; border: 1px solid #ddd;">
-                                 Document Details
-                             </th>
-                         </tr>
-                     </thead>
-                     <tbody>
-                        <t t-if="blog_post.author_id">
-                            <tr>
-                                <td style="font-weight: bold; padding: 4px; border: 1px solid #ddd;">Author</td>
-                                <td style="padding: 4px; border: 1px solid #ddd;">
-                                    <span t-field="blog_post.author_id.name"/>
-                                </td>
-                            </tr>
-                        </t>
-                        <t t-if="blog_post.blog_id">
-                            <tr>
-                                <td style="font-weight: bold; padding: 4px; border: 1px solid #ddd;">Category</td>
-                                <td style="padding: 4px; border: 1px solid #ddd;">
-                                    <span t-field="blog_post.blog_id.name"/>
-                                </td>
-                            </tr>
-                        </t>
-                        <t t-if="blog_post.post_date">
-                            <tr>
-                                <td style="font-weight: bold; padding: 4px; border: 1px solid #ddd;">Published on</td>
-                                <td style="padding: 4px; border: 1px solid #ddd;">
-                                    <span t-field="blog_post.post_date"/>
-                                </td>
-                            </tr>
-                        </t>
-                    </tbody>
-                </table>
 
-            </div>
+                    <!-- Document Details Table -->
+                    <div class="no-page-break" style="margin-top: 20px;">
+                        <table class="table table-sm" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" style="text-align: left; background-color: #f2f2f2; font-weight: bold; padding: 6px; border: 1px solid #ddd;">
+                                        Document Details
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-if="blog_post.author_id">
+                                    <tr>
+                                        <td style="font-weight: bold; padding: 4px; border: 1px solid #ddd;">Author</td>
+                                        <td style="padding: 4px; border: 1px solid #ddd;">
+                                            <span t-field="blog_post.author_id.name"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="blog_post.blog_id">
+                                    <tr>
+                                        <td style="font-weight: bold; padding: 4px; border: 1px solid #ddd;">Category</td>
+                                        <td style="padding: 4px; border: 1px solid #ddd;">
+                                            <span t-field="blog_post.blog_id.name"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="blog_post.post_date">
+                                    <tr>
+                                        <td style="font-weight: bold; padding: 4px; border: 1px solid #ddd;">Published on</td>
+                                        <td style="padding: 4px; border: 1px solid #ddd;">
+                                            <span t-field="blog_post.post_date"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </t>
         </t>
     </t>
-</t>
-
 </template>
+
+
 
 <record id="report_blog_post_pdf" model="ir.actions.report">
     <field name="name">PDF</field>
