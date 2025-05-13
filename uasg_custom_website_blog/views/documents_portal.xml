@@ -10,8 +10,8 @@
               <tr>
                 <th scope="col">📌 Title</th>
                 <th scope="col">📂 Type</th>
-                <th scope="col">📝 Description</th>
-                <th scope="col">📅 Date Created</th>
+                <!-- <th scope="col">📝 Description</th> -->
+                <th scope="col">📅 Approved Date</th>
                 <th scope="col">⬇️ File</th>
               </tr>
             </thead>
@@ -21,7 +21,7 @@
                   <td><strong><t t-esc="doc.name" /></strong></td>
                   <td><span class="badge bg-primary"><t t-esc="doc.document_type_id.name" /></span></td>
                   <td><t t-esc="doc.description or '-'" /></td>
-                  <td><t t-esc="doc.date_created.strftime('%Y-%m-%d')" /></td>
+                  <td><t t-esc="doc.date_modified.strftime('%Y-%m-%d')" /></td>
                   <td class="text-center">
                     <t t-if="doc.document_file">
                       <a t-att-href="'/web/content/it.documents/' + str(doc.id) + '/document_file?download=true'"
