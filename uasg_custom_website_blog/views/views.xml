@@ -134,7 +134,7 @@
     <xpath expr="//section[@id='o_wblog_post_main']" position="before">
         <div  class="container pt-4 pb-5 d-flex align-items-center my-3 ml-3">
 
-            <a t-att-href="'/report/pdf/uasg_custom_website_blog.report_blog_post_pdf/' + str(blog_post.id)" target="_blank">
+            <a t-att-href="'/blog/post/pdf/' + str(blog_post.id)" target="_blank">
                 <button class="btn btn-primary ml6">
                     <i class="fa fa-print me-2"></i> Print as PDF
                 </button>

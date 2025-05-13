@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 from odoo import http
+import werkzeug
 from odoo.http import request
 from odoo.addons.website.controllers.main import Website
 
@@ -19,6 +20,35 @@ class BlogPostReport(models.AbstractModel):
         }
 
 
+
+
+
+class BlogPDFReportController(http.Controller):
+
+    @http.route(['/blog/post/pdf/<int:blog_id>'], type='http', auth='public', website=True)
+    def generate_blog_pdf(self, blog_id, **kw):
+        blog_post = request.env['blog.post'].sudo().browse(blog_id)
+
+        if not blog_post.exists():
+            return werkzeug.exceptions.NotFound()
+
+        # Get the report action for your report
+        report_action = request.env['ir.actions.report']._get_report_from_name(
+            'uasg_custom_website_blog.report_blog_post_pdf'
+        )
+
+        # Correct usage: model name, and list of record IDs
+        pdf_content, _ = report_action._render_qweb_pdf('uasg_custom_website_blog.report_blog_post_pdf', res_ids = blog_post.id)
+
+        filename = (blog_post.name or "blog_post").replace(' ', '_') + ".pdf"
+
+        return request.make_response(
+            pdf_content,
+            headers=[
+                ('Content-Type', 'application/pdf'),
+                ('Content-Disposition', f'attachment; filename="{filename}"'),
+            ]
+        )
 
 class ItDocumentsController(http.Controller):
 
